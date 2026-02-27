@@ -160,14 +160,11 @@ pub fn get_user_info() -> Result<Option<CurrentUserInfo>, Box<dyn std::error::Er
     // Query the logged in users SID using the token 
     let user_sid = get_user_sid_from_token(h_token)?;
 
-    // Determine the user type (Azure AD, Domain, or Local) based on SID
+    // Determine the user type (Azure AD, or Domain/Local) based on SID
     let user_type = if user_sid.starts_with("S-1-12-1") {
         "AzureAD".to_string()
-    } else if user_sid.starts_with("S-1-5-") {
-        // This is typically the prefix for domain users
-        "Domain".to_string()
     } else {
-        "Local".to_string()
+        "DomainOrLocal".to_string()
     };
 
 
