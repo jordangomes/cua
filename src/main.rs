@@ -79,6 +79,7 @@ fn run_service() -> Result<()> {
         wait_hint: Duration::new(0, 0),
         process_id: None
     })?;
+    info!(action="service_stopped", "Service is stopped");
     Ok(())
 }
 
