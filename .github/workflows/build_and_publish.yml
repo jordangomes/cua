@@ -19,8 +19,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Get Version Number
       id: get-version-number
+      shell: bash
       run: |
-        TAG=$${{  github.ref_name }}
+        TAG=${{  github.ref_name }}
         echo Version: ${TAG#v}
         echo "VERSION=${TAG#v}" >> "$GITHUB_OUTPUT"
     - name: Install Rust
