@@ -123,17 +123,17 @@
                         <Component Id='binary1' Guid='*'>
                             <File
                                 Id='exe1'
-                                Name='install.exe'
+                                Name='install_service.exe'
                                 DiskId='1'
-                                Source='$(var.CargoTargetBinDir)\install.exe'
+                                Source='$(var.CargoTargetBinDir)\install_service.exe'
                                 KeyPath='yes'/>
                         </Component>
                         <Component Id='binary2' Guid='*'>
                             <File
                                 Id='exe2'
-                                Name='uninstall.exe'
+                                Name='uninstall_service.exe'
                                 DiskId='1'
-                                Source='$(var.CargoTargetBinDir)\uninstall.exe'
+                                Source='$(var.CargoTargetBinDir)\uninstall_service.exe'
                                 KeyPath='yes'/>
                         </Component>
                         <Component Id='binary3' Guid='*'>

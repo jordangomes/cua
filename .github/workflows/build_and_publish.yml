@@ -1,0 +1,30 @@
+name: Build and Publish Installer
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  ci_build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+    - name: Build
+      run: cargo build --verbose --release
+    - name: Set path for candle and light
+      run: echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+      shell: bash
+    - name: Install cargo-wix
+      run: cargo install cargo-wix
+    - name: Build Installer
+      run: cargo wix --nocapture
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        files: |
+          target/wix/cua-${{ steps.get_version.outputs.version-without-v }}-x86_64.msi
