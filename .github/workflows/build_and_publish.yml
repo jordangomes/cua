@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*'
+    workflow_dispatch:
+    
+permissions:
+  contents: write
+  packages: write
+  issues: write
 
 jobs:
   ci_build:
@@ -11,6 +17,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Get Version Number
+      id: get-version-number
+      run: |
+        TAG=${{ github.event.release.tag_name }}
+        echo Version: $VERSION
+        echo "VERSION=${TAG#v}" >> "$GITHUB_OUTPUT"
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
     - name: Build
@@ -27,4 +39,4 @@ jobs:
       if: github.ref_type == 'tag'
       with:
         files: |
-          target/wix/cua-${{ steps.get_version.outputs.version-without-v }}-x86_64.msi
+          target/wix/cua-${{ steps.get-version-number.outputs.VERSION }}-x86_64.msi
